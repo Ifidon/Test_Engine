@@ -4,11 +4,9 @@
 
   $users = $pdo->query('SELECT * FROM user');
   $users = $users->fetchAll();
-  var_dump($users);
 
   $orgs = $pdo->query('SELECT * FROM org');
   $orgs = $orgs->fetchAll();
-  var_dump($users);
 
   if(isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])) {
     $orgn = htmlentities($_POST['org']);
@@ -24,7 +22,7 @@
       $_SESSION['error'] = "Email must be a valid email address";
       header("Location: ind_reg.php");
     }
-    else if ($users) {
+    else if (count($users) > 0) {
       foreach ($users as $user) {
         if ($user['email'] == $email) {
           $_SESSION['error'] = "User ($email) already exists. Please login to continue!";
@@ -32,6 +30,15 @@
           break;
         }
       }
+      $sql = $pdo->prepare("INSERT INTO user (org_id, name, email, password) VALUES (:org, :name, :email, :pass)");
+      $sql->execute(array(
+        ':org' => $orgn,
+        ':name' => $name,
+        ':email' => $email,
+        ':pass' => $s_pass
+      ));
+    }
+    else {
       $sql = $pdo->prepare("INSERT INTO user (org_id, name, email, password) VALUES (:org, :name, :email, :pass)");
       $sql->execute(array(
         ':org' => $orgn,
