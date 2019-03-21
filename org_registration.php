@@ -23,7 +23,7 @@ if (isset($_POST['long_text']) && isset($_POST['short_text']) && isset($_POST['e
       if ($org['org_email'] == $email || $org['long_org_name'] == $lname || $org['short_org_name'] == $sname) {
         $_SESSION['error'] = "Organization ($lname) already exists. Please login to continue!";
         header("Location:login.php");
-        break;
+        break 2;
       }
     }
     $sql = $pdo->prepare('INSERT INTO org (long_org_name, short_org_name, org_email, org_password) VALUES (:lname, :sname, :email, :pass)');
