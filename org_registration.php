@@ -1,15 +1,9 @@
 <?php
 session_start();
-require 'header.php';
 require 'pdo.php';
-$salt = "7Xyt@IohtGdr002P";
+// $salt = "7Xyt@IohtGdr002P";
 $orgs = $pdo->query("SELECT * FROM org");
 $orgs = $orgs->fetchAll();
-// print_r($_SESSION);
-// print_r($orgs);
-//
-// print_r(count($orgs));
-
 if (isset($_POST['long_text']) && isset($_POST['short_text']) && isset($_POST['email']) && isset($_POST['password'])) {
   $lname = htmlentities($_POST['long_text']);
   $sname = htmlentities($_POST['short_text']);
@@ -20,7 +14,7 @@ if (isset($_POST['long_text']) && isset($_POST['short_text']) && isset($_POST['e
     $_SESSION['error'] = "All fields are required";
     header("Location: org_registration.php");
   }
-  else if (!strpos($email, "@")) {
+  else if (!strpos($email, "@") || !strpos($email, ".")) {
     $_SESSION['error'] = "Please provide a valid email/username for the organization";
     header("Location: org_registration.php");
   }
@@ -56,18 +50,21 @@ if (isset($_POST['long_text']) && isset($_POST['short_text']) && isset($_POST['e
     <script type="text/javascript" src="./asset/bootstrap/dist/js/bootstrap.min.js"></script>
   </head>
   <body>
+    <?php
+      require 'header.php';
+    ?>
    <div class="container">
-     <div class="row">
+     <div class="row p-3">
        <div class="col-8 order-3 m-auto">
          <?php
          if(isset($_SESSION['error'])) {
-           echo("<p class='alert alert-danger'> Error! ".htmlentities($_SESSION['error'])."</p>");
+           echo("<p class='alert alert-danger'> Error: ".htmlentities($_SESSION['error'])."</p>");
            if(!isset($_POST['create'])) {
              unset($_SESSION['error']);
            }
          }
          else if(isset($_SESSION['success'])) {
-             echo("<p class='alert alert-success'> Success! ".htmlentities($_SESSION['success'])."</p>");
+             echo("<p class='alert alert-success'> Success: ".htmlentities($_SESSION['success'])."</p>");
              if(!isset($_POST['create'])) {
                unset($_SESSION['success']);
              }
@@ -75,7 +72,7 @@ if (isset($_POST['long_text']) && isset($_POST['short_text']) && isset($_POST['e
          ?>
        </div>
        <div class="col-8 order-3 m-auto">
-         <h1 class="text-center text-info">Organization Registration form</h1>
+         <h1 class="text-center text-info">Create New Account (Organization)</h1>
          <form class="form bg-light p-3 border border-dark" method="post">
            <p class="text-center"><em>Please fill out the form below to register your organization. <br><br><span class="text-danger"> All fields are mandatory</span><em> </p>
            <p>
@@ -92,12 +89,16 @@ if (isset($_POST['long_text']) && isset($_POST['short_text']) && isset($_POST['e
            </p>
            <p>
              <label for="pass" class="">Organization Password:</label>
-             <input type="text" name="password" value="" class="form-control" id="pass">
+             <input type="password" name="password" value="" class="form-control" id="pass">
            </p>
            <p>
              <input type="submit" name="create" value="Register Organization" class="form-control btn btn-info">
            </p>
          </form>
+         <p>
+           Already Registered?
+           <a href="login.php">Login</a>
+         </p>
        </div>
      </div>
    </div>
