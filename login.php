@@ -31,8 +31,8 @@
       }
       else if($s_pass == $hit['org_password']) {
         $_SESSION['success'] = "Login Successful!";
-        $_SESSION['name'] = $hit['Short_org_name'];
-        header("Location:orgs.php?org=".urlencode($hit['short_org_name']));
+        $_SESSION['username'] = $email;
+        header("Location:orgview.php?org=".urlencode($hit['short_org_name']));
       }
       else if ($s_pass !== $hit['org_password']) {
         $_SESSION['error'] = "Login failed! Password Incorrect.";
@@ -56,7 +56,7 @@
       else if($user && ($s_pass == $user['password'])) {
         $_SESSION['success'] = "Login Successful!";
         $_SESSION['name'] = $user['email'];
-        header("Location:orgs.php?org=".urlencode($user['org_id'])."&=user=".urlencode($user['user_id']));
+        header("Location:orgs.php?org=".urlencode($user['org_id'])."&user=".urlencode($user['user_id']));
       }
       else if ($user && ($s_pass !== $user['password'])) {
         $_SESSION['error'] = "Login failed! Password Incorrect.";

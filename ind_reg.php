@@ -37,6 +37,10 @@
         ':email' => $email,
         ':pass' => $s_pass
       ));
+      $_SESSION['success'] = "User Registration Successful";
+      $_SESSION['user'] = $email;
+      $id = $pdo->lastInsertId();
+      header("Location:orgs.php?org=".urlencode($orgn)."&user=".urlencode($id));
     }
     else {
       $sql = $pdo->prepare("INSERT INTO user (org_id, name, email, password) VALUES (:org, :name, :email, :pass)");
@@ -46,6 +50,10 @@
         ':email' => $email,
         ':pass' => $s_pass
       ));
+      $_SESSION['success'] = "User Registration Successful";
+      $_SESSION['user'] = $email;
+      $id = $pdo->lastInsertId();
+      header("Location:orgs.php?org=".urlencode($orgn)."&user=".urlencode($id));
     }
   }
 ?>
