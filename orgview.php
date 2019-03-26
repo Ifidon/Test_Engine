@@ -40,10 +40,19 @@
       require 'header.php';
     ?>
     <div class="container">
-      <div class="row p-3">
         <div class="col-8 order-3 m-auto">
-          <p class="alert alert-success"><?= $_SESSION['success'] ?></p>
-          <form class="form border border-dark p-3" method="post">
+          <?php
+          if(isset($_SESSION['success'])) {
+              echo("<p class='alert alert-success' id='successmsg'> Success: ".htmlentities($_SESSION['success'])."</p>");
+              sleep(1);
+            }
+          ?>
+          <ul class='nav nav-tabs my-2'>
+            <li class='nav-item'>
+              <a href="#" class='nav-link' onclick="$('#profile').toggle()">Profile View</a>
+            </li>
+          </ul>
+          <form class="form border border-dark p-3" method="post" id='profile' style="display: none">
             <h4 class="text-center"><?= $org['long_org_name'] ?> - PROFILE VIEW</h4>
             <p>
               <label for="long">Organization Name:</label>
@@ -61,5 +70,11 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      $(document).ready(setTimeout(function() {
+        $('#successmsg').css('display', 'none')
+      }, 2000))
+
+    </script>
   </body>
 </html>
