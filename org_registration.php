@@ -28,26 +28,26 @@ if (isset($_POST['long_text']) && isset($_POST['short_text']) && isset($_POST['e
     }
     $sql = $pdo->prepare('INSERT INTO org (long_org_name, short_org_name, org_email, org_password) VALUES (:lname, :sname, :email, :pass)');
     $sql->execute(array(
-      ':lname' => $lname,
-      ':sname' => $sname,
-      ':email' => $email,
+      ':lname' => strtoupper($lname),
+      ':sname' => strtoupper($sname),
+      ':email' => strtolower($email),
       ':pass' => hash('md5', $salt.$pass)
     ));
     $_SESSION['success'] = 'Record Created!';
     $_SESSION['org'] = $sname;
-    header("Location:organizations.php?org=".urlencode($_SESSION['org_name']));
+    header("Location:orgview.php?org=".urlencode($_SESSION['org_name']));
   }
   else {
     $sql = $pdo->prepare('INSERT INTO org (long_org_name, short_org_name, org_email, org_password) VALUES (:lname, :sname, :email, :pass)');
     $sql->execute(array(
-      ':lname' => $lname,
-      ':sname' => $sname,
-      ':email' => $email,
+      ':lname' => strtoupper($lname),
+      ':sname' => strtoupper($sname),
+      ':email' => strtolower($email),
       ':pass' => hash('md5', $salt.$pass)
     ));
     $_SESSION['success'] = 'Record Created!';
     $_SESSION['org'] = $sname;
-    header("Location:organizations.php?org=".urlencode($_SESSION['org_name']));
+    header("Location:orgview.php?org=".urlencode($_SESSION['org_name']));
   }
 }
 ?>

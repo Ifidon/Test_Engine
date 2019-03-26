@@ -33,8 +33,8 @@
       $sql = $pdo->prepare("INSERT INTO user (org_id, name, email, password) VALUES (:org, :name, :email, :pass)");
       $sql->execute(array(
         ':org' => $orgn,
-        ':name' => $name,
-        ':email' => $email,
+        ':name' => strtoupper($name),
+        ':email' => strtolower($email),
         ':pass' => $s_pass
       ));
       $_SESSION['success'] = "User Registration Successful";
@@ -46,8 +46,8 @@
       $sql = $pdo->prepare("INSERT INTO user (org_id, name, email, password) VALUES (:org, :name, :email, :pass)");
       $sql->execute(array(
         ':org' => $orgn,
-        ':name' => $name,
-        ':email' => $email,
+        ':name' => strtoupper($name),
+        ':email' => strtolower($email),
         ':pass' => $s_pass
       ));
       $_SESSION['success'] = "User Registration Successful";

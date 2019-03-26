@@ -32,6 +32,7 @@
       else if($s_pass == $hit['org_password']) {
         $_SESSION['success'] = "Login Successful!";
         $_SESSION['username'] = $email;
+        // mail($to='e_fidon"yahoo.com', $subject='Login Notification', $message='Hello');
         header("Location:orgview.php?org=".urlencode($hit['short_org_name']));
       }
       else if ($s_pass !== $hit['org_password']) {
