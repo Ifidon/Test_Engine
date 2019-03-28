@@ -35,6 +35,7 @@ if (isset($_POST['long_text']) && isset($_POST['short_text']) && isset($_POST['e
     ));
     $_SESSION['success'] = 'Record Created!';
     $_SESSION['org'] = $sname;
+    $_SESSION['login'] = $email;
     header("Location:orgview.php?org=".urlencode($_SESSION['org_name']));
   }
   else {
@@ -47,6 +48,7 @@ if (isset($_POST['long_text']) && isset($_POST['short_text']) && isset($_POST['e
     ));
     $_SESSION['success'] = 'Record Created!';
     $_SESSION['org'] = $sname;
+    $_SESSION['login'] = $email;
     header("Location:orgview.php?org=".urlencode($_SESSION['org_name']));
   }
 }

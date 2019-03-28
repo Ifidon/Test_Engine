@@ -9,7 +9,7 @@
   </head>
   <body>
     <?php
-      require 'header.php'
+      require 'header.php';
     ?>
     <div class="row m-3">
       <div class="col-2 bg-secondary">
