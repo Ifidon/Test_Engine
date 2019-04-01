@@ -15,6 +15,36 @@
     ':id' => $org['org_id']
   ));
   $users = $sql2->fetchAll();
+
+  $sql3 = $pdo->prepare('SELECT * FROM question');
+  $sql3->execute();
+  $questions = $sql3->fetchAll();
+
+  if (isset($_POST['question']) && isset($_POST['option1']) && isset($_POST['option4'])) {
+    $quest = htmlentities($_POST['question']);
+    $opt1 = htmlentities($_POST['option1']);
+    $opt2 = htmlentities($_POST['option2']);
+    $opt3 = htmlentities($_POST['option3']);
+    $opt4 = htmlentities($_POST['option4']);
+    $mult = htmlentities($_POST['multiple']);
+    $cat = htmlentities($_POST['category']);
+    $sql4 = $pdo->prepare('INSERT INTO question (text, option1, option2, option3, option4, multiple, category) VALUES (:quest, :opt1, :opt2, :opt3, :opt4, :mul, :cat)');
+    $sql4->execute(array(
+      ':quest' => $quest,
+      ':opt1' => $opt1,
+      ':opt2' => $opt2,
+      ':opt3' => $opt3,
+      ':opt4' => $opt4,
+      ':mul' => $mult,
+      ':cat' => $cat
+    ));
+    $id = $pdo->lastInsertId();
+    $added = $pdo->prepare('SELECT * FROM question WHERE question_id = :id');
+    $added->execute(array(
+      ':id' => $id
+    ));
+    $added = $added->fetch();
+  }
   // var_dump($users);
 
   // $sql3 = $pdo->prepare('SELECT * FROM test WHERE org_id = :id');
@@ -45,7 +75,7 @@
             <?php
             if(isset($_SESSION['success'])) {
                 echo("<p class='alert alert-success' id='successmsg'> Success: ".htmlentities($_SESSION['success'])."</p>");
-                sleep(1);
+                unset($_SESSION['success']);
               }
             ?>
             <ul class='nav nav-tabs my-2'>
@@ -97,11 +127,12 @@
               </tbody>
             </table>
           </div>
-          <div class="for-group border border-dark p-3" id="questionadd" style="display:none">
+          <div class="for-group border border-dark p-3 m-3" id="questionadd" style="display:none">
+            <h4 class="text-center">ADD NEW QUESTION</h4>
             <form class="form" method="post">
               <p>
                 <label for="question">Question Text:</label>
-                <textarea name="question" rows="8" cols="80" class='form-control'></textarea>
+                <textarea name="question" rows="8" cols="80" class='form-control' value="<?= htmlentities($added['text'])?>"></textarea>
               </p>
               <p>
                 <label for="option1">Option 1</label>
@@ -119,6 +150,18 @@
                 <label for="option4">Answer</label>
                 <input type="text" name="option4" value="" class='form-control'>
               </p>
+              <p>
+                <label for="multiple">Multiple Answers?</label>
+                <select class="form-control" name="multiple" id="multiple">
+                  <option value="True">Yes</option>
+                  <option value="False" selected>No</option>
+                </select>
+              </p>
+              <p>
+                <label for="cat">Category</label>
+                <input type="text" name="category" value="" class='form-control' id="cat">
+              </p>
+              <input type="submit" name="save" value="Add Question" class="btn btn-secondary">
             </form>
           </div>
         </div>
@@ -126,7 +169,7 @@
     </div>
     <script type="text/javascript">
       $(document).ready(setTimeout(function() {
-        $('#successmsg').css('display', 'none')
+        $('#successmsg').remove()
       }, 1000));
 
       $(document).ready(function() {
