@@ -235,7 +235,7 @@
       });
       // $(document).ready(function() {
       //   $('#edit').click(function() {
-      //     $("td").html()
+      //     $("td.small").wrapInner("<td><textarea rows=7></textarea></td>")
       //   })
       // })
     </script>
