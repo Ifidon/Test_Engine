@@ -69,26 +69,27 @@
     <?php
       require 'header.php';
     ?>
-    <div class="container">
+    <div class="container-fluid">
       <div vlass="row">
-          <div class="col-8 order-3 m-auto">
+        <div class="col-8 order-3 m-auto">
             <?php
             if(isset($_SESSION['success'])) {
                 echo("<p class='alert alert-success' id='successmsg'> Success: ".htmlentities($_SESSION['success'])."</p>");
                 unset($_SESSION['success']);
               }
             ?>
-            <ul class='nav nav-tabs my-2'>
-              <li class='nav-item'>
-                <a href="#" class='nav-link' id='plink'>Profile View</a>
-              </li>
-              <li class='nav-item'>
-                <a href="#" class='nav-link' id='ulink'>Users</a>
-              </li>
-              <li class='nav-item'>
-                <a href="#" class='nav-link' id='qalink'>Questions</a>
-              </li>
-            </ul>
+          <ul class='nav nav-tabs my-2'>
+            <li class='nav-item'>
+              <a href="#" class='nav-link' id='plink'>Profile View</a>
+            </li>
+            <li class='nav-item'>
+              <a href="#" class='nav-link' id='ulink'>Users</a>
+            </li>
+            <li class='nav-item'>
+              <a href="#" class='nav-link' id='qalink'>Questions</a>
+            </li>
+          </ul>
+          <div class="form-group">
             <form class="form border border-dark p-3" method="post" id='profile'>
               <h4 class="text-center"><?= $org['long_org_name'] ?> - PROFILE VIEW</h4>
               <p>
@@ -104,66 +105,105 @@
                 <input type="text" name="org_email" value="<?= htmlentities($org['org_email']) ?>" class='form-control' onclick="disabled=true">
               </p>
             </form>
+          </div>
           <div class="table-group border border-dark p-3" id='userlist' style="display:none">
             <h4 class='text-center mb-3'>LIST OF REGISTERED USERS FOR <strong><?= $_SESSION['org'] ?></strong></h4>
-            <table class='table table-light'>
+            <table class='table table-bordered table-responsive table-striped'>
               <thead>
                 <tr>
                   <th>User ID</th>
                   <th>Full Name</th>
                   <th>Email</th>
                   <th>Phone No</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
                   foreach($users as $user) {
+                    echo("<tr>");
                     echo("<th scope='row'>".$user['user_id']."</th>");
                     echo("<td>".$user['name']."</td>");
                     echo("<td>".$user['email']."</td>");
                     echo("<td>No phone added</td>");
+                    echo("<td class='small'><a href='#' class='d-block' id=''>Edit</a><a href='#' class='d-block' id=''>Delete</a></td>");
+                    echo("</tr>");
                   }
                 ?>
               </tbody>
             </table>
           </div>
-          <div class="for-group border border-dark p-3 m-3" id="questionadd" style="display:none">
-            <h4 class="text-center">ADD NEW QUESTION</h4>
-            <form class="form" method="post">
-              <p>
-                <label for="question">Question Text:</label>
-                <textarea name="question" rows="8" cols="80" class='form-control' value="<?= htmlentities($added['text'])?>"></textarea>
-              </p>
-              <p>
-                <label for="option1">Option 1</label>
-                <input type="text" name="option1" value="" class='form-control'>
-              </p>
-              <p>
-                <label for="option2">Option 2</label>
-                <input type="text" name="option2" value="" class='form-control'>
-              </p>
-              <p>
-                <label for="option3">Option 3</label>
-                <input type="text" name="option3" value="" class='form-control'>
-              </p>
-              <p>
-                <label for="option4">Answer</label>
-                <input type="text" name="option4" value="" class='form-control'>
-              </p>
-              <p>
-                <label for="multiple">Multiple Answers?</label>
-                <select class="form-control" name="multiple" id="multiple">
-                  <option value="True">Yes</option>
-                  <option value="False" selected>No</option>
-                </select>
-              </p>
-              <p>
-                <label for="cat">Category</label>
-                <input type="text" name="category" value="" class='form-control' id="cat">
-              </p>
-              <input type="submit" name="save" value="Add Question" class="btn btn-secondary">
-            </form>
+          <div class=" table-group border border-dark p-3 m-3" id="questionadd" style="display:none">
+            <table class="table table-bordered table-responsive table-striped">
+              <thead>
+                <tr>
+                  <th class='small'>Q_ID</th>
+                  <th class='small'>QUESTION</th>
+                  <th class='small'>OPTION 1</th>
+                  <th class='small'>OPTION 2</th>
+                  <th class='small'>OPTION 3</th>
+                  <th class='small'>ANSWER</th>
+                  <th class='small'>MULTIPLE ANSWER</th>
+                  <th class='small'>CATEGORY</th>
+                  <th class='small'>ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                  foreach($questions as $question) {
+                    echo("<tr>");
+                    echo("<th scope='row' class='small'>".$question['question_id']."</th>");
+                    echo("<td class='small'>".$question['text']."</td>");
+                    echo("<td class='small'>".$question['option1']."</td>");
+                    echo("<td class='small'>".$question['option2']."</td>");
+                    echo("<td class='small'>".$question['option3']."</td>");
+                    echo("<td class='small'>".$question['option4']."</td>");
+                    echo("<td class='small'>".$question['multiple']."</td>");
+                    echo("<td class='small'>".$question['category']."</td>");
+                    echo("<td class='small'><a href='#' class='d-block' id='edit'>Edit</a><a href='#' class='d-block' id='del'>Delete</a></td>");
+                    echo("</tr>");
+                  }
+                ?>
+              </tbody>
+            </table>
           </div>
+          <div class="form-group">
+              <h4 class="text-center">ADD NEW QUESTION</h4>
+              <form class="form" method="post" hidden>
+                <p>
+                  <label for="question">Question Text:</label>
+                  <textarea name="question" rows="8" cols="80" class='form-control' value="<?= htmlentities($added['text'])?>"></textarea>
+                </p>
+                <p>
+                  <label for="option1">Option 1</label>
+                  <input type="text" name="option1" value="" class='form-control'>
+                </p>
+                <p>
+                  <label for="option2">Option 2</label>
+                  <input type="text" name="option2" value="" class='form-control'>
+                </p>
+                <p>
+                  <label for="option3">Option 3</label>
+                  <input type="text" name="option3" value="" class='form-control'>
+                </p>
+                <p>
+                  <label for="option4">Answer</label>
+                  <input type="text" name="option4" value="" class='form-control'>
+                </p>
+                <p>
+                  <label for="multiple">Multiple Answers?</label>
+                  <select class="form-control" name="multiple" id="multiple">
+                    <option value="True">Yes</option>
+                    <option value="False" selected>No</option>
+                  </select>
+                </p>
+                <p>
+                  <label for="cat">Category</label>
+                  <input type="text" name="category" value="" class='form-control' id="cat">
+                </p>
+                <input type="submit" name="save" value="Add Question" class="btn btn-secondary">
+              </form>
+            </div>
         </div>
       </div>
     </div>
@@ -192,8 +232,12 @@
             $('#userlist').hide();
           }
         })
-      })
-
+      });
+      // $(document).ready(function() {
+      //   $('#edit').click(function() {
+      //     $("td").html()
+      //   })
+      // })
     </script>
   </body>
 </html>
