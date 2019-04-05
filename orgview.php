@@ -64,6 +64,7 @@
     <link rel="stylesheet" href="./asset/bootstrap/dist/css/bootstrap.min.css">
     <script type="text/javascript" src='./asset/jquery/jquery.min.js'></script>
     <script type="text/javascript" src="./asset/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./asset/scripts/orgview.js"></script>
   </head>
   <body>
     <?php
@@ -78,14 +79,16 @@
                 unset($_SESSION['success']);
               }
             ?>
-          <ul class='nav nav-tabs my-2'>
-            <li class='nav-item'>
+            <h4 class="text-center"> Welcome, <?= htmlentities($org['short_org_name']) ?></h4>
+            <p class="float-right text-info small"><strong> <?= "Date: ". date("d M Y") ?></strong></p>
+          <ul class='nav nav-tabs my-5'>
+            <li class='nav-item mx-auto'>
               <a href="#" class='nav-link' id='plink'>Profile View</a>
             </li>
-            <li class='nav-item'>
+            <li class='nav-item mx-auto'>
               <a href="#" class='nav-link' id='ulink'>Users</a>
             </li>
-            <li class='nav-item'>
+            <li class='nav-item mx-auto'>
               <a href="#" class='nav-link' id='qalink'>Questions</a>
             </li>
           </ul>
@@ -207,37 +210,5 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-      $(document).ready(setTimeout(function() {
-        $('#successmsg').remove()
-      }, 1000));
-
-      $(document).ready(function() {
-        $('li a').click(function() {
-          $(this).addClass('active');
-          $('li a').not(this).removeClass('active');
-          if (($(this).attr('id')) == 'plink') {
-            $('#profile').show();
-            $('#userlist').hide();
-            $('#questionadd').hide();
-          }
-          else if (($(this).attr('id')) == 'ulink') {
-            $('#userlist').show();
-            $('#profile').hide();
-            $('#questionadd').hide();
-          }
-          else if (($(this).attr('id')) == 'qalink') {
-            $('#questionadd').show();
-            $('#profile').hide();
-            $('#userlist').hide();
-          }
-        })
-      });
-      // $(document).ready(function() {
-      //   $('#edit').click(function() {
-      //     $("td.small").wrapInner("<td><textarea rows=7></textarea></td>")
-      //   })
-      // })
-    </script>
   </body>
 </html>

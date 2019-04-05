@@ -59,7 +59,7 @@
         $_SESSION['success'] = "Login Successful!";
         $_SESSION['org_id'] = $user['org_id'];
         $_SESSION['login'] = $email;
-        header("Location:orgs.php?org=".urlencode($user['org_id'])."&user=".urlencode($user['user_id']));
+        header("Location:persview.php?org=".urlencode($user['org_id'])."&user=".urlencode($user['user_id']));
       }
       else if ($user && ($s_pass !== $user['password'])) {
         $_SESSION['error'] = "Login failed! Password Incorrect.";
