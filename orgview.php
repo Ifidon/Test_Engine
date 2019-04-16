@@ -20,6 +20,12 @@
   $sql3->execute();
   $questions = $sql3->fetchAll();
 
+  $sql4 = $pdo->prepare('SELECT * FROM test where org_id = :id');
+  $sql4->execute(array(
+    ':id' => $org['org_id']
+  ));
+  $tests = $sql4->fetchAll();
+
   if (isset($_POST['question']) && isset($_POST['option1']) && isset($_POST['option4'])) {
     $quest = htmlentities($_POST['question']);
     $opt1 = htmlentities($_POST['option1']);
@@ -89,7 +95,10 @@
               <a href="#" class='nav-link' id='ulink'>Users</a>
             </li>
             <li class='nav-item mx-auto'>
-              <a href="#" class='nav-link' id='qalink'>Questions</a>
+              <a href="#" class='nav-link' id='qlink'>Questions</a>
+            </li>
+            <li class='nav-item mx-auto'>
+              <a href="#" class='nav-link' id='tlink'>Tests</a>
             </li>
           </ul>
           <div class="form-group">
@@ -111,7 +120,7 @@
           </div>
           <div class="table-group border border-dark p-3" id='userlist' style="display:none">
             <h4 class='text-center mb-3'>LIST OF REGISTERED USERS FOR <strong><?= $_SESSION['org'] ?></strong></h4>
-            <table class='table table-bordered table-responsive table-striped'>
+            <table class='table table-bordered table-responsive-lg table-striped'>
               <thead>
                 <tr>
                   <th>User ID</th>
@@ -135,9 +144,11 @@
                 ?>
               </tbody>
             </table>
+            <button type="button" name="button" class="btn btn-secondary ml-auto">Add New User</button>
           </div>
-          <div class=" table-group border border-dark p-3 m-3" id="questionadd" style="display:none">
-            <table class="table table-bordered table-responsive table-striped">
+          <div class=" table-group border border-dark p-3 m-3" id="questionlist" style="display:none">
+            <h4 class='text-center'>List of Questions for <?= $org['short_org_name'] ?></h4>
+            <table class="table table-bordered table-responsive-lg table-striped">
               <thead>
                 <tr>
                   <th class='small'>Q_ID</th>
@@ -169,10 +180,39 @@
                 ?>
               </tbody>
             </table>
+            <button type="button" name="button" class="btn btn-secondary ml-auto">Add New Question</button>
           </div>
-          <div class="form-group">
+          <div class="table-group border border-dark p-3 m-3" style="display:none" id="testlist">
+            <h4 class='text-center my-4'>List of Tests for <?= $org['short_org_name'] ?> </h4>
+            <table class="table table-center table-bordered table-responsive-lg table-striped" id="testtable">
+              <thead>
+                <tr>
+                  <th>Test ID</th>
+                  <th>Test Title</th>
+                  <th>No.of Questions</th>
+                  <th>Duration (Mins.)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                foreach($tests as $test) {
+                  echo("<tr>");
+                  echo("<th scope='row' class='small'>".$test['test_id']."</th>");
+                  echo("<td class='small'>".$test['title']."</td>");
+                  echo("<td class='small'>".$test['length']."</td>");
+                  echo("<td class='small'>".$test['duration']."</td>");
+                  echo("<td class='small'><a href='#'>Edit</a> / <a href='#'>Delete</a> / <a href='#' id='generate'>Generate Test</a></td>");
+                  echo("</tr>");
+                }
+                ?>
+              </tbody>
+            </table>
+            <button type="button" name="button" class="btn btn-secondary ml-auto">Add New Test</button>
+          </div>
+          <div class="form-group" hidden>
               <h4 class="text-center">ADD NEW QUESTION</h4>
-              <form class="form" method="post" hidden>
+              <form class="form" method="post">
                 <p>
                   <label for="question">Question Text:</label>
                   <textarea name="question" rows="8" cols="80" class='form-control' value="<?= htmlentities($added['text'])?>"></textarea>
