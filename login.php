@@ -31,7 +31,7 @@
       }
       else if($s_pass == $hit['org_password']) {
         $_SESSION['success'] = "Login Successful!";
-        $_SESSION['org'] = $hit['short_org_name'];
+        $_SESSION['user'] = $hit['short_org_name'];
         $_SESSION['login'] = $email;
         // mail($to='e_fidon"yahoo.com', $subject='Login Notification', $message='Hello');
         header("Location:orgview.php?org=".urlencode($hit['short_org_name']));
@@ -57,6 +57,7 @@
       }
       else if($user && ($s_pass == $user['password'])) {
         $_SESSION['success'] = "Login Successful!";
+        $_SESSION['user'] = $user['name'],
         $_SESSION['org_id'] = $user['org_id'];
         $_SESSION['login'] = $email;
         header("Location:persview.php?org=".urlencode($user['org_id'])."&user=".urlencode($user['user_id']));

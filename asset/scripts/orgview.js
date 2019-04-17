@@ -33,6 +33,13 @@ $(document).ready(function() {
   })
 });
 
+$(document).ready(function() {
+  $('td a').click(function() {
+    if($(this).text() === 'Delete') {
+      confirm("Do you want to delete this entry?");
+    }
+  })
+});
 // $(document).ready(function() {
 //   $('table tbody tr td a').on('click', function() {
 //     var link = $(this);

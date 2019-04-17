@@ -7,7 +7,7 @@
   $sql->execute(array(
     ':email' => $_SESSION['login']
   ));
-  $org = $sql->fetch();
+  $org = $sql->fetch(PDO::FETCH_ASSOC);
   // var_dump($org);
 
   $sql2 = $pdo->prepare('SELECT * FROM user WHERE org_id = :id');
@@ -49,7 +49,7 @@
     $added->execute(array(
       ':id' => $id
     ));
-    $added = $added->fetch();
+    $added = $added->fetch(PDO::FETCH_ASSOC);
   }
   // var_dump($users);
 
@@ -148,7 +148,7 @@
           </div>
           <div class=" table-group border border-dark p-3 m-3" id="questionlist" style="display:none">
             <h4 class='text-center'>List of Questions for <?= $org['short_org_name'] ?></h4>
-            <table class="table table-bordered table-responsive-lg table-striped">
+            <table class="table table-bordered table-responsive table-striped">
               <thead>
                 <tr>
                   <th class='small'>Q_ID</th>
@@ -174,7 +174,7 @@
                     echo("<td class='small'>".$question['option4']."</td>");
                     echo("<td class='small'>".$question['multiple']."</td>");
                     echo("<td class='small'>".$question['category']."</td>");
-                    echo("<td class='small'><a href='#' class='d-block' id='edit'>Edit</a><a href='#' class='d-block' id='del'>Delete</a></td>");
+                    echo("<td class='small'><a href='edit.php?question=".urlencode($question['question_id'])."&edit=True' class='d-block'>Edit</a><a href='#' class='d-block' id='del'>Delete</a></td>");
                     echo("</tr>");
                   }
                 ?>
@@ -202,7 +202,7 @@
                   echo("<td class='small'>".$test['title']."</td>");
                   echo("<td class='small'>".$test['length']."</td>");
                   echo("<td class='small'>".$test['duration']."</td>");
-                  echo("<td class='small'><a href='#'>Edit</a> / <a href='#'>Delete</a> / <a href='#' id='generate'>Generate Test</a></td>");
+                  echo("<td class='small'><a href='edit.php?test=".urlencode($test['test_id'])."&edit=True'>Edit</a> / <a href='#'>Delete</a> / <a href='#' id='generate'>Generate Test</a></td>");
                   echo("</tr>");
                 }
                 ?>
