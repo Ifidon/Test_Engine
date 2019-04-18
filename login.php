@@ -57,7 +57,7 @@
       }
       else if($user && ($s_pass == $user['password'])) {
         $_SESSION['success'] = "Login Successful!";
-        $_SESSION['user'] = $user['name'],
+        $_SESSION['user'] = $user['name'];
         $_SESSION['org_id'] = $user['org_id'];
         $_SESSION['login'] = $email;
         header("Location:persview.php?org=".urlencode($user['org_id'])."&user=".urlencode($user['user_id']));

@@ -119,7 +119,7 @@
             </form>
           </div>
           <div class="table-group border border-dark p-3" id='userlist' style="display:none">
-            <h4 class='text-center mb-3'>LIST OF REGISTERED USERS FOR <strong><?= $_SESSION['org'] ?></strong></h4>
+            <h4 class='text-center mb-3'>LIST OF REGISTERED USERS FOR <strong><?= $org['short_org_name'] ?></strong></h4>
             <table class='table table-bordered table-responsive-lg table-striped'>
               <thead>
                 <tr>
@@ -137,8 +137,8 @@
                     echo("<th scope='row'>".$user['user_id']."</th>");
                     echo("<td>".$user['name']."</td>");
                     echo("<td>".$user['email']."</td>");
-                    echo("<td>No phone added</td>");
-                    echo("<td class='small'><a href='#' class='d-block' id=''>Edit</a><a href='#' class='d-block' id=''>Delete</a></td>");
+                    echo("<td>".$user['tel']."</td>");
+                    echo("<td class='small'><a href='edit.php?user=".urlencode($user['user_id'])."&edit=True' class='d-block' id=''>Edit</a><a href='delete.php?user=".urlencode($user['user_id'])."&delete=True' class='d-block' id=''>Delete</a></td>");
                     echo("</tr>");
                   }
                 ?>
@@ -174,7 +174,7 @@
                     echo("<td class='small'>".$question['option4']."</td>");
                     echo("<td class='small'>".$question['multiple']."</td>");
                     echo("<td class='small'>".$question['category']."</td>");
-                    echo("<td class='small'><a href='edit.php?question=".urlencode($question['question_id'])."&edit=True' class='d-block'>Edit</a><a href='#' class='d-block' id='del'>Delete</a></td>");
+                    echo("<td class='small'><a href='edit.php?question=".urlencode($question['question_id'])."&edit=True' class='d-block'>Edit</a><a href='delete.php?question=".urlencode($question['question_id'])."&delete=True' class='d-block'>Delete</a></td>");
                     echo("</tr>");
                   }
                 ?>
@@ -202,7 +202,7 @@
                   echo("<td class='small'>".$test['title']."</td>");
                   echo("<td class='small'>".$test['length']."</td>");
                   echo("<td class='small'>".$test['duration']."</td>");
-                  echo("<td class='small'><a href='edit.php?test=".urlencode($test['test_id'])."&edit=True'>Edit</a> / <a href='#'>Delete</a> / <a href='#' id='generate'>Generate Test</a></td>");
+                  echo("<td class='small'><a href='edit.php?test=".urlencode($test['test_id'])."&edit=True'>Edit</a> / <a href='delete.php?test=".urlencode($test['test_id'])."&delete=True'>Delete</a> / <a href='#' id='generate'>Generate Test</a></td>");
                   echo("</tr>");
                 }
                 ?>

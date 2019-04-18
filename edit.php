@@ -25,6 +25,16 @@ $data;
     $question = $query->fetch(PDO::FETCH_ASSOC);
     $data = $question;
   }
+  else if (isset($_GET['user']) && $_GET['edit']) {
+    $type = "User";
+    $user_id = $_GET['user'];
+    $query = $pdo->prepare("SELECT name, email, tel FROM user where user_id = :u_id");
+    $query->execute(array(
+      ':u_id' => htmlentities($user_id)
+    ));
+    $user = $query->fetch(PDO::FETCH_ASSOC);
+    $data = $user;
+  }
 
   if(isset($_POST['update'])) {
     if($type === 'Test') {
@@ -37,7 +47,7 @@ $data;
       ));
       unset($_GET['test']);
       unset($_GET['edit']);
-      header("Location:orgview.php?org=".urlencode($_SESSION['org']));
+      header("Location:orgview.php?org=".urlencode($_SESSION['user']));
     }
     else if ($type === 'Question') {
       {
@@ -54,7 +64,21 @@ $data;
         ));
         unset($_GET['question']);
         unset($_GET['edit']);
-        header("Location:orgview.php?org=".urlencode($_SESSION['org']));
+        header("Location:orgview.php?org=".urlencode($_SESSION['user']));
+      }
+    }
+    else if ($type === 'User') {
+      {
+        $stmt = $pdo->prepare("UPDATE user SET name = :name, email = :mail, tel = :phone WHERE user_id = :u_id");
+        $stmt->execute(array(
+          ':u_id' => htmlentities($_GET['user']),
+          ':name' => htmlentities($_POST['name']),
+          ':mail' => htmlentities($_POST['email']),
+          ':phone' => htmlentities($_POST['tel'])
+        ));
+        unset($_GET['user']);
+        unset($_GET['edit']);
+        header("Location:orgview.php?org=".urlencode($_SESSION['user']));
       }
     }
   }
