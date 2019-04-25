@@ -2,15 +2,20 @@
 session_start();
   require 'pdo.php';
 
-  $sql = $pdo->query("SELECT * FROM question where category = 'HRPP' ORDER BY RAND() LIMIT 2");
-  $questions = $sql->fetch();
-  $myj  = JSON_encode($questions);
-
-  $sql1 = $pdo->prepare("SELECT name, email FROM user where email = :email");
+  $sql1 = $pdo->prepare("SELECT name, email, org_id FROM user where email = :email");
   $sql1->execute(array(
     ':email' => $_SESSION['login']
   ));
   $user = $sql1->fetch();
+
+  $query = $pdo->prepare("SELECT * FROM test where org_id = :o_id");
+  $query->execute(array(
+    ':o_id' => $user['org_id']
+  ));
+  $tests = $query->fetchAll(PDO::FETCH_ASSOC);
+
+  $totqs = $pdo->query("SELECT COUNT(question_id) AS total_questions FROM test_questions");
+  $question_count = $totqs->fetch();
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +39,30 @@ session_start();
             <li class="nav-item mx-auto"><a href="#" class="nav-link">Available Tests</a></li>
             <li class="nav-item mx-auto"><a href="#" class="nav-link">Test History</a></li>
           </ul>
+          <div id="testdiv">
+            <?php
+              foreach($tests as $test) {
+                echo("<table class='table table-bordered table-responsive'>");
+                echo("<thead>");
+                echo("<tr>");
+                echo("<th>Test ID</th>");
+                echo("<th>Test Title</th>");
+                echo("<th>No. of questions</th>");
+                echo("<th>Test Duration</th>");
+                echo("<th>Action</th>");
+                echo("</tr>");
+                echo("</thead>");
+                echo("<tbody>");
+                echo("<th>".$test['test_id']."</th>");
+                echo("<td>".$test['title']."</td>");
+                echo("<td>".$question_count['total_questions']."</td>");
+                echo("<td>".$question_count['total_questions']." minutes</td>");
+                echo("<td><a href='#'>Take Test</a>");
+                echo("</tbody>");
+                echo("</table>");
+              }
+            ?>
+          </div>
         </div>
       </div>
     </div>

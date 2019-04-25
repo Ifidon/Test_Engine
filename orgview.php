@@ -202,7 +202,7 @@
                   echo("<td class='small'>".$test['title']."</td>");
                   echo("<td class='small'>".$test['length']."</td>");
                   echo("<td class='small'>".$test['duration']."</td>");
-                  echo("<td class='small'><a href='edit.php?test=".urlencode($test['test_id'])."&edit=True'>Edit</a> / <a href='delete.php?test=".urlencode($test['test_id'])."&delete=True'>Delete</a> / <a href='viewtest.php?test_id=".urlencode($test['test_id'])."'>Generate Test</a></td>");
+                  echo("<td class='small'><a href='edit.php?test=".urlencode($test['test_id'])."&edit=True'>Edit</a> / <a href='delete.php?test=".urlencode($test['test_id'])."&delete=True'>Delete</a> / <a href='viewtest.php?test=".urlencode($test['test_id'])."' target='_blank'>Generate Test</a></td>");
                   echo("</tr>");
                 }
                 ?>
