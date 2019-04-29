@@ -16,9 +16,10 @@
   ));
   $users = $sql2->fetchAll();
 
-  $sql3 = $pdo->prepare('SELECT * FROM question');
+  $sql3 = $pdo->prepare('SELECT * FROM question ORDER BY question_id DESC LIMIT 5');
   $sql3->execute();
   $questions = $sql3->fetchAll();
+  // $questions = array_reverse($questions);
 
   $sql4 = $pdo->prepare('SELECT * FROM test where org_id = :id');
   $sql4->execute(array(
@@ -50,6 +51,7 @@
       ':id' => $id
     ));
     $added = $added->fetch(PDO::FETCH_ASSOC);
+    header("Location: orgview.php?org=".urlencode($org['short_org_name']));
   }
   // var_dump($users);
 
@@ -180,7 +182,7 @@
                 ?>
               </tbody>
             </table>
-            <button type="button" name="button" class="btn btn-secondary ml-auto">Add New Question</button>
+            <button type="button" name="button" class="btn btn-secondary ml-auto" data-toggle="modal" data-target="#newquestion">Add New Question</button>
           </div>
           <div class="table-group border border-dark p-3 m-3" style="display:none" id="testlist">
             <h4 class='text-center my-4'>List of Tests for <?= $org['short_org_name'] ?> </h4>
@@ -210,8 +212,60 @@
             </table>
             <button type="button" name="button" class="btn btn-secondary ml-auto">Add New Test</button>
           </div>
-          <div class="form-group" hidden>
-              <h4 class="text-center">ADD NEW QUESTION</h4>
+
+          <div id="newquestion" class="modal" tabindex = "-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="text-center modal-title">Add new question</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body p-4">
+                  <form class="form" method="post">
+                    <p>
+                      <label for="question">Question Text:</label>
+                      <textarea name="question" rows="8" cols="80" class='form-control' value="<?= htmlentities($added['text'])?>"></textarea>
+                    </p>
+                    <p>
+                      <label for="option1">Option 1</label>
+                      <input type="text" name="option1" value="" class='form-control'>
+                    </p>
+                    <p>
+                      <label for="option2">Option 2</label>
+                      <input type="text" name="option2" value="" class='form-control'>
+                    </p>
+                    <p>
+                      <label for="option3">Option 3</label>
+                      <input type="text" name="option3" value="" class='form-control'>
+                    </p>
+                    <p>
+                      <label for="option4">Answer</label>
+                      <input type="text" name="option4" value="" class='form-control'>
+                    </p>
+                    <p>
+                      <label for="multiple">Multiple Answers?</label>
+                      <select class="form-control" name="multiple" id="multiple">
+                        <option value="True">Yes</option>
+                        <option value="False" selected>No</option>
+                      </select>
+                    </p>
+                    <p>
+                      <label for="cat">Category</label>
+                      <input type="text" name="category" value="" class='form-control' id="cat">
+                    </p>
+                    <input type="submit" name="save_question" value="Add Question" class="btn btn-secondary">
+                  </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group modal-fade" id="newquestion" hidden>
+
               <form class="form" method="post">
                 <p>
                   <label for="question">Question Text:</label>

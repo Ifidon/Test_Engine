@@ -1,0 +1,21 @@
+#hrdisp {
+  color: #128EEA;
+  font-size: 2em;
+  font-family: cursive;
+}
+
+#mindisp {
+  color: #128EEA;
+  font-size: 1.5em;
+  font-family: cursive;
+}
+
+#secdisp {
+  color: #128EEA;
+  font-size: 1em;
+  font-family: cursive;
+}
+
+#timer {
+  background: #F1F5F8
+}

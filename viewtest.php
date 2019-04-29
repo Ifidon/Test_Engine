@@ -66,6 +66,7 @@
           <?php
             foreach($test_questions as $t_q) {
               echo("<div class='border border-dark p-3 mt-3'");
+              echo("<p class='small'><strong>".$t_q['category']."</strong></p>");
               echo("<p class='small'>".$t_q['text']."</p>");
               echo("<p class='small'> A: ".$t_q['option1']."</p>");
               echo("<p class='small'> B: ".$t_q['option2']."</p>");
