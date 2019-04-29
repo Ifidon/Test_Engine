@@ -28,9 +28,6 @@
       $sec = 59;
     }
     $sec = $sec - 1;
-    sleep(1);
-    counter();
-    // echo("<p>$hr : $min : $sec</p>");
   }
   counter();
 ?>
