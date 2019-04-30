@@ -40,7 +40,7 @@ $data;
     if($type === 'Test') {
       $stmt = $pdo->prepare("UPDATE test SET title = :ttl, duration = :dur, length = :len WHERE test_id = :t_id");
       $stmt->execute(array(
-        ':t_id' => htmlentities($_POST['test']),
+        ':t_id' => htmlentities($_GET['test']),
         ':ttl' => htmlentities($_POST['title']),
         ':dur' => htmlentities($_POST['duration']),
         ':len' => htmlentities($_POST['length'])
@@ -95,8 +95,9 @@ $data;
     <script type="text/javascript" src="./asset/scripts/edit.js"></script>
   </head>
   <body>
-    <?php require 'header.php' ?>
+    <?php require 'header.php'?>
     <div class="container-fluid">
+      <?php require 'timer.php' ?>
       <div vlass="row">
         <div class="col-8 order-3 m-auto">
           <div class="form-group border border-dark p-3 m-3">

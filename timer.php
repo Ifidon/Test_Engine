@@ -1,44 +1,13 @@
-<?php
-  $hr = 1;
-  $min = 30;
-  $sec = 0;
-  function format($num) {
-    if (strlen($num) < 2) {
-      print_r("0".$num);
-      return "0".$num;
-    }
-    else {
-      print_r($num);
-      return $num;
-    }
-  }
-  // format(5);
+<div class="row">
+  <div class=" col-5 order-3 ml-auto" id="timer">
+    <span id="hrdisp"></span>
+    <span id="mindisp"></span>
+    <span id="secdisp"></span>
+  </div>
+</div>
 
-  function counter() {
-    $hr = 1;
-    $min = 30;
-    $sec = 0;
-    if ($sec == 0 && $min > 0) {
-      $min = $min - 1;
-      $sec = 59;
-    }
-    else if ($sec == 0 && $min == 0 && $hr > 0) {
-      $hr = $hr - 1;
-      $min = 59;
-      $sec = 59;
-    }
-    $sec = $sec - 1;
-  }
-  counter();
-?>
-
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <p><?= $hr, $min, $sec ?></p>
-  </body>
-</html>
+<!-- <link rel="stylesheet" href="./asset/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="./asset/styles/countdown.css">
+<script type="text/javascript" src="./asset/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="./asset/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./asset/scripts/countdown.js"></script> -->
