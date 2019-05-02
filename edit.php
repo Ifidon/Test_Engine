@@ -1,5 +1,6 @@
 <?php
 session_start();
+require "unauthorized.php";
 require 'pdo.php';
 $type;
 $data;
@@ -133,5 +134,12 @@ $data;
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      $('#navlink').html("Logout");
+      $("#navlink").on('click', function() {
+        confirm("Do you want proceed with log out?")
+      });
+      $("#navlink").attr("href", "logout.php");
+    </script>
   </body>
 </html>

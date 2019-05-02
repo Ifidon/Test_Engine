@@ -1,5 +1,6 @@
 <?php
   session_start();
+  require "unauthorized.php";
   require 'pdo.php';
 
   $stm = $pdo->prepare("SELECT * FROM test where test_id = :t_id");
@@ -16,27 +17,41 @@
   $grps = $query->fetchAll(PDO::FETCH_ASSOC);
   // print_r($grps);
 
-  foreach($grps as $grp) {
-    $str = "SELECT * FROM question where category = :cat ORDER BY RAND() LIMIT ".$grp['grp_size'];
-    $stmt = $pdo->prepare($str);
-    $stmt->execute(array(
-      ':cat' => htmlentities($grp['grp_category']),
-      // ':len' => htmlentities($grp['grp_size'])
-    ));
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    foreach($result as $res) {
-      $res['grp'] = $grp['grp_id'];
-      array_push($test_questions, $res);
-      try {
-        $quer = $pdo->prepare("INSERT INTO test_questions (grp_id, question_id, test_id) VALUES (:g_id, :q_id, :t_id)");
-        $quer->execute(array(
-          ':g_id' => htmlentities($grp['grp_id']),
-          ':t_id' => htmlentities($_GET['test']),
-          ':q_id' => htmlentities($res['question_id'])
-        ));
-      }
-      catch (Exception $err) {
-        continue;
+  $st = $pdo->prepare("SELECT * FROM test_questions JOIN question ON test_questions.question_id = question.question_id where test_id = :t_id");
+  $st->execute(array(
+    ':t_id' => htmlentities($_GET['test'])
+  ));
+  $quests = $st->fetchAll(PDO::FETCH_ASSOC);
+  // print_r($quests);
+
+  if (sizeOf($quests) > 0) {
+    foreach($quests as $quest) {
+      array_push($test_questions, $quest);
+    }
+  }
+  else {
+    foreach($grps as $grp) {
+      $str = "SELECT * FROM question where category = :cat ORDER BY RAND() LIMIT ".$grp['grp_size'];
+      $stmt = $pdo->prepare($str);
+      $stmt->execute(array(
+        ':cat' => htmlentities($grp['grp_category']),
+        // ':len' => htmlentities($grp['grp_size'])
+      ));
+      $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      foreach($result as $res) {
+        $res['grp'] = $grp['grp_id'];
+        array_push($test_questions, $res);
+        try {
+          $quer = $pdo->prepare("INSERT INTO test_questions (grp_id, question_id, test_id) VALUES (:g_id, :q_id, :t_id)");
+          $quer->execute(array(
+            ':g_id' => htmlentities($grp['grp_id']),
+            ':t_id' => htmlentities($_GET['test']),
+            ':q_id' => htmlentities($res['question_id'])
+          ));
+        }
+        catch (Exception $err) {
+          continue;
+        }
       }
     }
   }

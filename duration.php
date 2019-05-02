@@ -1,4 +1,6 @@
 <?php
+  session_start();
+  require "unauthorized.php";
   require 'pdo.php';
   $test = $pdo->query("SELECT * FROM test");
   $res = $test->fetchAll(PDO::FETCH_ASSOC);

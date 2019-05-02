@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'unauthorized.php';
 require 'pdo.php';
   if(isset($_GET['user']) && $_GET['delete']) {
     $query = $pdo->prepare("DELETE FROM user where user_id = :u_id");

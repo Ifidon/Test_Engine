@@ -7,13 +7,7 @@
     <div class="collapse navbar-collapse" id="menulist">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a href="index.php" class="nav-link">Home <span class="sr-only">(current)</span> </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">Register Organization</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">Organization Login</a>
+          <a href="index.php" class="nav-link" id="navlink"><span class="sr-only">(current)</span> </a>
         </li>
       </ul>
     </div>

@@ -1,6 +1,7 @@
 <?php
 session_set_cookie_params(18000);
 session_start();
+require "unauthorized.php";
   require 'pdo.php';
 
   $sql1 = $pdo->prepare("SELECT name, email, org_id FROM user where email = :email");
@@ -58,7 +59,7 @@ session_start();
                 echo("<td>".$test['title']."</td>");
                 echo("<td>".$question_count['total_questions']."</td>");
                 echo("<td>".$question_count['total_questions']." minutes</td>");
-                echo("<td><a href='#'>Take Test</a>");
+                echo("<td><a href='testpage.php?test=".urlencode($test['test_id'])."'>Take Test</a>");
                 echo("</tbody>");
                 echo("</table>");
               }
@@ -67,5 +68,12 @@ session_start();
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      $('#navlink').html("Logout");
+      $("#navlink").on('click', function() {
+        confirm("Do you want proceed with log out?")
+      });
+      $("#navlink").attr("href", "logout.php");
+    </script>
   </body>
 </html>

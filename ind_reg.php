@@ -126,5 +126,9 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      $('#navlink').html("Login");
+      $("#navlink").attr("href", "login.php");
+    </script>
   </body>
 </html>

@@ -137,6 +137,10 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      $('#navlink').html("Register");
+      $("#navlink").attr("href", "ind_reg.php");
+    </script>
 
   </body>
 </html>

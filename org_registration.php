@@ -116,5 +116,9 @@ if (isset($_POST['long_text']) && isset($_POST['short_text']) && isset($_POST['e
        </div>
      </div>
    </div>
+   <script type="text/javascript">
+     $('#navlink').html("Login");
+     $("#navlink").attr("href", "login.php");
+   </script>
   </body>
 </html>
