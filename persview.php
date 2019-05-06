@@ -41,29 +41,31 @@ require "unauthorized.php";
             <li class="nav-item mx-auto"><a href="#" class="nav-link">Available Tests</a></li>
             <li class="nav-item mx-auto"><a href="#" class="nav-link">Test History</a></li>
           </ul>
-          <div id="testdiv">
-            <?php
-              foreach($tests as $test) {
-                echo("<table class='table table-bordered table-responsive'>");
-                echo("<thead>");
-                echo("<tr>");
-                echo("<th>Test ID</th>");
-                echo("<th>Test Title</th>");
-                echo("<th>No. of questions</th>");
-                echo("<th>Test Duration</th>");
-                echo("<th>Action</th>");
-                echo("</tr>");
-                echo("</thead>");
-                echo("<tbody>");
-                echo("<th>".$test['test_id']."</th>");
-                echo("<td>".$test['title']."</td>");
-                echo("<td>".$question_count['total_questions']."</td>");
-                echo("<td>".$question_count['total_questions']." minutes</td>");
-                echo("<td><a href='testpage.php?test=".urlencode($test['test_id'])."'>Take Test</a>");
-                echo("</tbody>");
-                echo("</table>");
-              }
-            ?>
+          <div id="testdiv" class="table-responsive">
+            <table class="table table-bordered table-stripped">
+              <thead>
+                <tr>
+                  <th>Test ID</th>
+                  <th>Test Title</th>
+                  <th>No. of questions</th>
+                  <th>Test Duration</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                  foreach($tests as $test) {
+                    echo("<tr>");
+                    echo("<th>".$test['test_id']."</th>");
+                    echo("<td>".$test['title']."</td>");
+                    echo("<td>".$question_count['total_questions']."</td>");
+                    echo("<td>".$question_count['total_questions']." minutes</td>");
+                    echo("<td><a href='testpage.php?org=".urlencode($user['org_id'])."&user=".urlencode($_GET['user'])."&test=".urlencode($test['test_id'])."'>View/Take Test</a>");
+                    echo("</tr>");
+                  }
+                ?>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

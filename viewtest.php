@@ -67,7 +67,6 @@
     <link rel="stylesheet" href="./asset/bootstrap/dist/css/bootstrap.min.css">
     <script type="text/javascript" src='./asset/jquery/jquery.min.js'></script>
     <script type="text/javascript" src="./asset/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="./asset/scripts/orgview.js"></script>
   </head>
   <body>
     <?php

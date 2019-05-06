@@ -121,9 +121,9 @@
               </p>
             </form>
           </div>
-          <div class="table-group border border-dark p-3" id='userlist' style="display:none">
+          <div class="table-responsive border border-dark p-3" id='userlist' style="display:none">
             <h4 class='text-center mb-3'>LIST OF REGISTERED USERS FOR <strong><?= $org['short_org_name'] ?></strong></h4>
-            <table class='table table-bordered table-responsive-lg table-striped'>
+            <table class='table table-bordered table-striped'>
               <thead>
                 <tr>
                   <th>User ID</th>
@@ -149,9 +149,9 @@
             </table>
             <button type="button" name="button" class="btn btn-secondary ml-auto">Add New User</button>
           </div>
-          <div class=" table-group border border-dark p-3 m-3" id="questionlist" style="display:none">
+          <div class=" table-responsive border border-dark p-3 m-3" id="questionlist" style="display:none">
             <h4 class='text-center'>List of Questions for <?= $org['short_org_name'] ?></h4>
-            <table class="table table-bordered table-responsive table-striped">
+            <table class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th class='small'>Q_ID</th>
@@ -185,9 +185,9 @@
             </table>
             <button type="button" name="button" class="btn btn-secondary ml-auto" data-toggle="modal" data-target="#newquestion">Add New Question</button>
           </div>
-          <div class="table-group border border-dark p-3 m-3" style="display:none" id="testlist">
+          <div class="table-responsive border border-dark p-3 m-3" style="display:none" id="testlist">
             <h4 class='text-center my-4'>List of Tests for <?= $org['short_org_name'] ?> </h4>
-            <table class="table table-center table-bordered table-responsive-lg table-striped" id="testtable">
+            <table class="table table-center table-bordered table-striped" id="testtable">
               <thead>
                 <tr>
                   <th>Test ID</th>
