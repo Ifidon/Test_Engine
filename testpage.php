@@ -2,7 +2,7 @@
   session_start();
   require 'unauthorized.php';
   require 'pdo.php';
-  require 'getuser.php';
+  require 'getparams.php';
   // SELECT * FROM test_questions JOIN question ON test_questions.question_id = question.question_id where test_id = :id
   $query = $pdo->prepare("SELECT COUNT(question_id), grp_category FROM test_questions JOIN question_grp ON test_questions.grp_id = question_grp.grp_id where test_questions.test_id = :id GROUP BY test_questions.grp_id");
   $query->execute(array(
@@ -56,7 +56,7 @@
                     echo("<td>".$group['grp_category']."</td>");
                     echo("<td>".$group['COUNT(question_id)']."</td>");
                     echo("<td>".$group['COUNT(question_id)']." minutes </td>");
-                    echo("<td><a href='testpage.php?org=".urlencode($_GET['org'])."&user=".urlencode($_GET['user'])."&test=".urlencode($_GET['test'])."&section=".urlencode($group['grp_category'])."'>Start</a></td>");
+                    echo("<td><a href='questionform.php?org=".urlencode($_GET['org'])."&user=".urlencode($_GET['user'])."&test=".urlencode($_GET['test'])."&section=".urlencode($group['grp_category'])."&question=0' target='_blank'>Start</a></td>");
                     echo("</tr>");
                   }
                 ?>

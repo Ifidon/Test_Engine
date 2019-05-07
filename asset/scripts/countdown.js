@@ -2,15 +2,21 @@ $(document).ready(function() {
   var hr = Number();
   var min = Number();
   var sec = Number();
-  $.getJSON("duration.php", function(data) {
-    // window.console && console.log(data)
-    time = Number(data['duration']);
-    hr = parseInt((time)/60);
-    min = time % 60
-    var sec = 0;
-    console.log(hr);
-    console.log(min);
-  })
+  // $.getJSON("duration.php", function(data) {
+  //   // window.console && console.log(data)
+  //   time = Number(data['duration']);
+  //   hr = parseInt((time)/60);
+  //   min = time % 60
+  //   var sec = 0;
+  //   console.log(hr);
+  //   console.log(min);
+  // })
+
+  var time = $("#dur").html();
+  time = Number(time);
+  hr = parseInt((time)/60);
+  min = time % 60
+  var sec = 0;
 
   function num_formatter(num) {
     num = String(num);
@@ -39,7 +45,7 @@ $(document).ready(function() {
     sec = sec - 1;
     $("#hrdisp").html(num_formatter(hr) + " Hrs : ");
     $("#mindisp").html(num_formatter(min) + " Mins : ");
-    $("#secdisp").html(num_formatter(sec) + " Secs");
+    $("#secdisp").html(num_formatter(sec) + " Secs remaining");
   }
   window.setInterval(counter, 1000);
 })

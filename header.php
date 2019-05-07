@@ -1,6 +1,8 @@
 <header class="m-3">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a href="#" class="navbar-brand">IFIDON'S CORPORATE TEST ENGINE</a>
+    <a href="#" class="navbar-brand">
+      <img src="neftil.jpg" height=40% width=40% alt="neftil_brand" class='img img-thumbnail img-fluid'>
+    </a>
     <button type="button" name="button" class="navbar-toggler" data-toggle="collapse" data-target="#menulist">
       <span class="navbar-toggler-icon"></span>
     </button>
