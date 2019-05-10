@@ -3,10 +3,31 @@
   require 'unauthorized.php';
   require 'pdo.php';
   require 'getparams.php';
-  // SELECT * FROM test_questions JOIN question ON test_questions.question_id = question.question_id where test_id = :id
-  $query = $pdo->prepare("SELECT COUNT(question_id), grp_category FROM test_questions JOIN question_grp ON test_questions.grp_id = question_grp.grp_id where test_questions.test_id = :id GROUP BY test_questions.grp_id");
-  $query->execute(array(
+
+  $ins = $pdo->prepare("SELECT question_id, test_id, grp_id FROM test_questions WHERE test_id = :id");
+  $ins->execute(array(
     ':id' => htmlentities($_GET['test'])
+  ));
+  $questions = $ins->fetchAll(PDO::FETCH_ASSOC);
+
+  foreach($questions as $question) {
+    try {
+      $upd = $pdo->prepare("INSERT INTO user_test (user_id, question_id, test_id, grp_id) VALUES (:uid, :qid, :tid, :gid)");
+      $upd->execute(array(
+        ':uid' => htmlentities($_GET['user']),
+        ':qid' => $question['question_id'],
+        ':tid' => $question['test_id'],
+        ':gid' => $question['grp_id']
+      ));
+    }
+    catch(Exception $e) {
+      continue;
+    };
+  };
+  // SELECT * FROM test_questions JOIN question ON test_questions.question_id = question.question_id where test_id = :id
+  $query = $pdo->prepare("SELECT COUNT(question_id), grp_category FROM user_test JOIN question_grp ON user_test.grp_id = question_grp.grp_id where user_test.user_id = :id GROUP BY user_test.grp_id");
+  $query->execute(array(
+    ':id' => htmlentities($_GET['user'])
   ));
   $groups = $query->fetchAll(PDO::FETCH_ASSOC);
   // $groups = json_encode($groups);
@@ -56,7 +77,7 @@
                     echo("<td>".$group['grp_category']."</td>");
                     echo("<td>".$group['COUNT(question_id)']."</td>");
                     echo("<td>".$group['COUNT(question_id)']." minutes </td>");
-                    echo("<td><a href='questionform.php?org=".urlencode($_GET['org'])."&user=".urlencode($_GET['user'])."&test=".urlencode($_GET['test'])."&section=".urlencode($group['grp_category'])."&question=0' target='_blank'>Start</a></td>");
+                    echo("<td><a id ='strt' href='questionform.php?org=".urlencode($_GET['org'])."&user=".urlencode($_GET['user'])."&test=".urlencode($_GET['test'])."&section=".urlencode($group['grp_category'])."&question=0' target='_blank'>Start</a></td>");
                     echo("</tr>");
                   }
                 ?>
@@ -73,5 +94,6 @@
       confirm("Do you want proceed with log out?")
     });
     $("#navlink").attr("href", "logout.php");
+    })
   </script>
 </html>
