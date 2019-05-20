@@ -94,5 +94,13 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      $('#navlink').html("Exit");
+      $("#navlink").on('click', function() {
+        if (confirm("Do you want proceed with log out?")) {
+          window.close()
+        }
+      });
+    </script>
   </body>
 </html>

@@ -17,6 +17,17 @@
   // print_r($set);
   // $set2 = json_encode($set);
   // echo($set2);
+
+  try {
+    $ins = $pdo->prepare("INSERT INTO sub_scr (user_id, grp_id) VALUES (:uid, :gid)");
+    $ins->execute(array(
+      ':uid' => htmlentities($_GET['user']),
+      ':gid' => htmlentities($_GET['gid'])
+    ));
+  }
+  catch(Exception $e) {
+
+  }
 ?>
 
 <!DOCTYPE html>
@@ -46,12 +57,6 @@
             Duration: <span id="dur"><?= sizeOf($set) ?></span> minutes (Please see TIMER)<br>
           <p>
           <div class="form-group form-responsive border border-dark float-left p-1">
-            <?php
-              $question = $set[$_GET['question']];
-              $question_text = $question['text'];
-              $question_opts = array($question['option1'], $question['option2'], $question['option3'], $question['option4']);
-              shuffle($question_opts);
-            ?>
             <form class="form m-3" id='qform'>
               <ol>
                 <li id='sn'>
@@ -93,7 +98,9 @@
             }
             if( i == questions.length-1) {
               $("#next").html("Submit");
-              // $("#prev").hide();
+            }
+            else {
+              $("#next").html("Next");
             }
       };
 
@@ -107,81 +114,35 @@
           $("#next").click(function() {
             if($("#next").html() == "Submit") {
               data[i]['submission'] = $(":checked").val();
-              data = JSON.stringify(data);
-              data = JSON.parse(data);
               $.post('submit.php', data[i], function(result) {
                 console.log(result)
               });
-              // window.close();
+              if(confirm("Are you sire?")) {
+                window.close();
+              }
             }
             else {
                 data[i]['submission'] = $(":checked").val();
                 $("input").prop("checked", false);
-                $.post('submit.php', data[i], function(result) {
+                $.post('update.php', data[i], function(result) {
                   console.log(result)
                 });
                 // console.log(data[i]);
                 i = i + 1;
                 setinput(data, i);
+                var vals = data[i]['submission']
+                $("input[value='" + vals + "']").prop('checked', true)
             }
-          })
+          });
 
-          // $("#next").click(function() {
-          //   data[i]['submission'] = $(":checked").val();
-          //   $("input").prop("checked", false);
-          //   console.log(data[i]);
-          //   i = i + 1;
-          //   setinput(data, i);
-          })
-        });
-
-    // $("#text").html(questions[0]['question']);
-    // $('#opt1').val(questions[i]['a']);
-    // $("#a").html(questions[i]['a']);
-    // $('#opt2').val(questions[i]['b']);
-    // $("#b").html(questions[i]['b']);
-    // $('#opt3').val(questions[i]['c']);
-    // $("#c").html(questions[i]['c']);
-    // $('#opt4').val(questions[i]['d']);
-    // $("#d").html(questions[i]['d'])
-
-    // $(document).ready(function() {
-    //   getdata();
-    //   $("#text").html(questions[i]['question'])
-    //   $('#opt1').val(questions[i]['a']);
-    //   $("#a").html(questions[i]['a']);
-    //   $('#opt2').val(questions[i]['b']);
-    //   $("#b").html(questions[i]['b']);
-    //   $('#opt3').val(questions[i]['c']);
-    //   $("#c").html(questions[i]['c']);
-    //   $('#opt4').val(questions[i]['d']);
-    //   $("#d").html(questions[i]['d'])
-    // })
-
-
-
-      // $(document).ready(function() {
-      //   $.getJSON('testform.php', function(data) {
-      //     var i = 0;
-      //     $("#text").html(data[i]['question'])
-      //     $('#opt1').val(data[i]['a']);
-      //     $("#a").html(data[i]['a']);
-      //     $('#opt2').val(data[i]['b']);
-      //     $("#b").html(data[i]['b']);
-      //     $('#opt3').val(data[i]['c']);
-      //     $("#c").html(data[i]['c']);
-      //     $('#opt4').val(data[i]['d']);
-      //     $("#d").html(data[i]['d'])
-      //     // console.log(data)
-      //     $("#next").click(function() {
-      //       data[i]['submission'] = $(":checked").val();
-      //       console.log(data[i]);
-      //       i = i + 1;
-      //       $(".container").load(location.href + "#qform")
-      //     })
-      //   })
-      // })
-
+          $('#prev').click(function() {
+            i = i - 1;
+            setinput(data, i)
+            var vals = data[i]['submission']
+            $("input[value='" + vals + "']").prop('checked', true)
+          });
+        })
+      });
     </script>
   </body>
 </html>
