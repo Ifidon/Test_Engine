@@ -1,5 +1,7 @@
 <?php
   require 'update.php';
+  // $_SESSION['completed'] = Array();
+  // array_push($_SESSION['completed'], $cat);
 
   $qry = $pdo->prepare("SELECT grp_id FROM question_grp where grp_category = :cat");
   $qry->execute(array(

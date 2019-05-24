@@ -4,6 +4,13 @@
   require 'pdo.php';
   require 'getparams.php';
 
+  $del = $pdo->prepare("DELETE FROM user_test where user_id = :uid AND test_id = :tid");
+  $del->execute(array(
+    ':uid' => htmlentities($_GET['user']),
+    ':tid' => htmlentities($_GET['test'])
+  ));
+
+
   $ins = $pdo->prepare("SELECT question_id, test_id, grp_id FROM test_questions WHERE test_id = :id");
   $ins->execute(array(
     ':id' => htmlentities($_GET['test'])
@@ -32,7 +39,17 @@
   $groups = $query->fetchAll(PDO::FETCH_ASSOC);
   // $groups = json_encode($groups);
   // print_r($groups);
-
+  if (isset($_SESSION['completed'])) {
+    $completed;
+    foreach($groups as $group) {
+      if (! in_array($group['grp_category'], $_SESSION['completed'])) {
+        continue;
+      }
+      $completed = array_search($group, $groups);
+      array_splice($groups, $completed, 1);
+    }
+    // print_r($_SESSION);
+}
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +77,7 @@
               </ol>
             </p>
           </div>
-          <div class="table-responsive">
+          <div class="table-responsive w-100 h-100">
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -77,7 +94,7 @@
                     echo("<td>".$group['grp_category']."</td>");
                     echo("<td>".$group['COUNT(question_id)']."</td>");
                     echo("<td>".$group['COUNT(question_id)']." minutes </td>");
-                    echo("<td><a id ='strt' href='questionform.php?org=".urlencode($_GET['org'])."&user=".urlencode($_GET['user'])."&test=".urlencode($_GET['test'])."&section=".urlencode($group['grp_category'])."&gid=".urlencode($group['grp_id'])."'' target='_blank'>Start</a></td>");
+                    echo("<td><a id ='strt' name='strt'  href='questionform.php?org=".urlencode($_GET['org'])."&user=".urlencode($_GET['user'])."&test=".urlencode($_GET['test'])."&section=".urlencode($group['grp_category'])."&gid=".urlencode($group['grp_id'])."' target='_blank'>Start</a></td>");
                     echo("</tr>");
                   }
                 ?>
@@ -93,6 +110,9 @@
         confirm("Do you want proceed with log out?")
       });
       $("#navlink").attr("href", "logout.php");
+      $("a[name=strt]").click(function() {
+        location.reload()
+      })
     </script>
   </body>
 </html>

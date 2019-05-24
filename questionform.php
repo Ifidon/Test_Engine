@@ -7,6 +7,9 @@
   $_SESSION['cat'] = $_GET['section'];
   $_SESSION['user_id'] = $_GET['user'];
 
+  $cat = $_GET['section'];
+  array_push($_SESSION['completed'], $cat);
+
   $query = $pdo->prepare("SELECT text, option1, option2, option3, option4, grp_category FROM test_questions JOIN question ON test_questions.question_id = question.question_id JOIN question_grp ON test_questions.grp_id = question_grp.grp_id where test_questions.test_id = :t_id AND grp_category= :cat");
   $query->execute(array(
     ':t_id' => urldecode($_GET['test']),
@@ -56,7 +59,7 @@
             Section: <?= urldecode($_GET['section']) ?><br>
             Duration: <span id="dur"><?= sizeOf($set) ?></span> minutes (Please see TIMER)<br>
           <p>
-          <div class="form-group form-responsive border border-dark float-left p-1">
+          <div class="form-group form-responsive border border-dark float-left p-1 w-100 h-100">
             <form class="form m-3" id='qform'>
               <ol>
                 <li id='sn'>

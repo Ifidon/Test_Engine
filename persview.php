@@ -1,8 +1,9 @@
 <?php
-session_set_cookie_params(18000);
-session_start();
-require "unauthorized.php";
+  session_set_cookie_params(18000);
+  session_start();
+  require "unauthorized.php";
   require 'pdo.php';
+  $_SESSION['completed'] = Array();
 
   $sql1 = $pdo->prepare("SELECT name, email, org_id FROM user where email = :email");
   $sql1->execute(array(
