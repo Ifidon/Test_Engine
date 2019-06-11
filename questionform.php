@@ -132,7 +132,7 @@
                 });
                 // console.log(data[i]);
                 i = i + 1;
-                setinput(data, i);
+                setinput(data, i)
                 var vals = data[i]['submission']
                 $("input[value='" + vals + "']").prop('checked', true)
             }

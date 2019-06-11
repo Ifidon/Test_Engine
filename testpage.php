@@ -110,8 +110,9 @@
         confirm("Do you want proceed with log out?")
       });
       $("#navlink").attr("href", "logout.php");
-      $("a[name=strt]").click(function() {
-        location.reload()
+      $("td > a").click(function() {
+        window.setTimeout(function() {location.reload()}, 3000)
+        // location.reload()
       })
     </script>
   </body>
