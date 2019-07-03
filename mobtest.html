@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>JQUERY POST TEST</title>
+    <link rel="stylesheet" href="./asset/bootstrap/dist/css/bootstrap.min.css">
+    <script type="text/javascript" src='./asset/jquery/jquery.min.js'></script>
+    <script type="text/javascript" src="./asset/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./asset/scripts/orgview.js"></script>
+  </head>
+  <body>
+    <form class="form-inline" action="upload.php" method="post" enctype="multipart/form-data" style="padding:50px; width: 100%">
+      <div class="">
+        <input class="form-control my-2" type="file" name="passport" value="Select">
+        <input class="form-control my-2 btn btn-success" type="submit" name="upload" value="Upload">
+      </div>
+    </form>
+
+    <form id = "loginform" method="post" action="" class="form" style="padding:50px; width: 100%">
+		<div>
+			<input class="form-control w-100" type="text" name="userid" id="userid" placeholder="User ID" style="width:100%; margin-bottom:10px; height:40px">
+
+			<input class="form-control w-100" type="password" name="password" id="userpass" placeholder="Password" style="width:100%; margin-top:10px; height:40px">
+
+			<input class="btn btn-primary w-100" type="submit" name="submit" id="submit" placeholder="Password" style="width:100%; margin-top:10px; height:40px">
+		</div>
+	 </form>
+   <p id="result"></p>
+   <script type="text/javascript">
+     var data = {}
+     $(document).ready(function() {
+      $("#loginform").submit(function(event) {
+        event.preventDefault();
+        data['userid'] = $("#userid").val();
+        data['password'] = $("#userpass").val();
+        $.post('mobapp.php', data, function(result) {
+          console.log(result)
+        })
+      })
+     })
+   </script>
+  </body>
+</html>

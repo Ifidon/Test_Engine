@@ -104,7 +104,7 @@
             }
           ?>
         </div>
-        <div class="col-8 order-3 m-auto">
+        <div class="col-xs-12 col-sm-8 order-3 m-auto">
           <h1 class="text-center text-info">Login</h1>
           <form class="form bg-light p-3 border border-dark" method="post">
             <p>
